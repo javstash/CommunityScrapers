@@ -1,4 +1,4 @@
-name: czechav
+name: CzechAV
 sceneByURL:
   - action: scrapeXPath
     url:
@@ -7,13 +7,12 @@ sceneByURL:
       - czechbangbus.com/
       - czechbitch.com/
       - czechcabins.com/
+      - czechcasting.com/
       - czechcouples.com/
-      - czechdungeon.com/
       - czechestrogenolit.com/
       - czechexperiment.com/
       - czechfantasy.com/
       - czechfirstvideo.com/
-      - czechgame.com/
       - czechgangbang.com/
       - czechgardenparty.com/
       - czechgayamateurs.com/
@@ -22,7 +21,6 @@ sceneByURL:
       - czechgayfantasy.com/
       - czechgaymassage.com/
       - czechgaysolarium.com/
-      - czechgaytoilets.com/
       - czechharem.com/
       - czechhomeorgy.com/
       - czechlesbians.com/
@@ -49,24 +47,22 @@ sceneByURL:
     scraper: sceneScraper
 xPathScrapers:
   sceneScraper:
-    common:
-      $studio: //h1/img/@alt
     scene:
-      Title:
-        selector: //div/h1[@class='nice-title']
+      Title: //h1/span
+      Code:
+        selector: //h1/div/span
         postProcess:
           - replace:
-            - regex: .+(?:\d:\s*)([^T]+)
-              with: $1
-      Details: //div[@class='desc-text']/p
+              - regex: .+?(\d+)$
+                with: $1
+      Details: //div[contains(@class,'detail-description--longer')]/p
       Tags:
-        Name: //a[@class='tag']/text()
+        Name: //div[@data-part="tags"]//a/span
       Performers:
-        Name: //div[@class='stars']//a/text()
+        Name: //span[contains(., "Featuring:")]/following-sibling::a
       Studio:
-        Name: $studio
-      Image:
-        selector: //video/@poster
+        Name: //img[contains(@class, "logo")]/@alt
+      Image: //video/@poster
       Date:
         selector: //script[@type="application/ld+json"]
         postProcess:
